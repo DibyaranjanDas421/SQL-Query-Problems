@@ -37,3 +37,9 @@ SELECT (
     LIMIT 1 OFFSET 1
 ) AS SecondHighestSalary;      
 
+--Customers Who Bought All Products | Medium
+select customer_id from
+customer group by customer_id
+having count(distinct product_key)=(
+    select count(*) from product
+);
