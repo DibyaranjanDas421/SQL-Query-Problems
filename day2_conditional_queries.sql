@@ -43,3 +43,25 @@ customer group by customer_id
 having count(distinct product_key)=(
     select count(*) from product
 );
+
+----Find Users With Valid Emails
+SELECT *
+FROM Users
+WHERE REGEXP_LIKE(mail, '^[A-Za-z][A-Za-z0-9_.-]*@leetcode\\.com$', 'c');
+
+--Customers Who Never Order | Easy
+SELECT c.name AS Customers
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Orders o
+    WHERE o.customerId = c.id
+);
+
+--Top Travellers | Easy
+select name,
+ifnull((select sum(distance)from Rides r
+where r.user_id=c.id
+),0) as travelled_distance
+
+from Users c group by c.id order by travelled_distance desc,name asc;
